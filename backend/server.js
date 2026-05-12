@@ -23,3 +23,17 @@ app.listen(PORT, () => {
     console.log(`🚀 Sunucu şu adreste çalışıyor: http://localhost:${PORT}`);
     console.log(`📁 Statik dosyalar sunuluyor: ${path.join(__dirname, '../frontend')}`);
 });
+
+const { processSubscriptionData } = require('./src/services/subscriptionService');
+
+// Örnek veritabanı (Şimdilik geçici olarak burada tutuyoruz)
+let subscriptions = [
+    { id: 1, name: "Netflix", price: 150, expiryDate: "2026-06-15" },
+    { id: 2, name: "Spotify", price: 60, expiryDate: "2026-05-20" }
+];
+
+// Tüm abonelikleri getiren ve kalan günleri hesaplayan API
+app.get('/api/subscriptions', (req, res) => {
+    const processedData = processSubscriptionData(subscriptions);
+    res.json(processedData);
+});
